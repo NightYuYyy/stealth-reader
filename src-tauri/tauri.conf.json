@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicepkg/vscode-tauri/main/schemas/tauri.conf.schema.json",
+  "productName": "Stealth Reader",
+  "version": "1.0.0",
+  "identifier": "com.stealth-reader.app",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Stealth Reader",
+        "width": 320,
+        "height": 400,
+        "minWidth": 220,
+        "minHeight": 200,
+        "resizable": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "visible": true,
+        "center": true,
+        "skipTaskbar": false,
+        "transparent": false,
+        "shadow": true,
+        "dragDropEnabled": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  }
+}

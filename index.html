@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stealth Reader</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <!-- Custom title bar -->
+  <div id="titlebar" data-tauri-drag-region>
+    <span id="titlebar-label">Stealth Reader</span>
+    <div id="titlebar-controls">
+      <button id="btn-minimize" title="Minimize" aria-label="Minimize">─</button>
+      <button id="btn-close" title="Close" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div id="tabbar">
+    <div id="tabs"></div>
+    <button id="btn-new-tab" title="Open file (Ctrl+O)" aria-label="Open file">+</button>
+  </div>
+
+  <!-- Main content area (reader + chapter panel) -->
+  <div id="main-area">
+  <!-- Reader area -->
+  <div id="reader">
+    <div id="reader-content"></div>
+    <div id="reader-placeholder">
+      <p>📖 拖拽 .txt 文件到此处打开</p>
+      <p class="hint">Ctrl+O 打开文件 | Ctrl+B 伪装模式 | Ctrl+Shift+H 隐藏</p>
+    </div>
+  </div>
+  <!-- Chapter panel (toggle) -->
+  <div id="chapter-panel" class="hidden">
+    <div id="chapter-list"></div>
+  </div>
+</div>
+
+  <!-- Status bar -->
+  <div id="statusbar">
+    <span id="status-position">—</span>
+    <span id="status-progress"></span>
+    <span id="status-encoding"></span>
+  </div>
+
+  <!-- Search bar (hidden by default) -->
+  <div id="searchbar" class="hidden">
+    <input id="search-input" type="text" placeholder="搜索..." />
+    <span id="search-count">0/0</span>
+    <button id="btn-search-prev" title="上一个">▲</button>
+    <button id="btn-search-next" title="下一个">▼</button>
+    <button id="btn-search-close" title="关闭">✕</button>
+  </div>
+
+  <!-- Jump dialog (hidden by default) -->
+  <div id="jump-overlay" class="hidden">
+    <div id="jump-panel">
+      <h3>快捷跳转</h3>
+      <label>跳转到 <input id="jump-input" type="text" placeholder="章节名 / 百分比 / 行号" /></label>
+      <div class="jump-buttons">
+        <button id="btn-jump-go">跳转</button>
+        <button id="btn-jump-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Settings overlay -->
+  <div id="settings-overlay" class="hidden">
+    <div id="settings-panel">
+      <h3>设置</h3>
+      <label>字号 <input id="set-font-size" type="range" min="10" max="28" value="14" /></label>
+      <label>行高 <input id="set-line-height" type="range" min="1.0" max="3.0" step="0.1" value="1.8" /></label>
+      <label>编码
+        <select id="set-encoding">
+          <option value="auto">自动检测</option>
+          <option value="utf-8">UTF-8</option>
+          <option value="gbk">GBK</option>
+          <option value="gb18030">GB18030</option>
+        </select>
+      </label>
+      <button id="btn-close-settings">关闭</button>
+    </div>
+  </div>
+
+  <script type="module" src="/src/app.ts"></script>
+</body>
+</html>
