@@ -57,17 +57,6 @@ async function init(): Promise<void> {
     saveReaderSettings();
   });
 
-  // Restore tabs
-  if (appState?.tabs?.open_files?.length) {
-    for (const filePath of appState.tabs.open_files) {
-      await openFileInTab(filePath, false);
-    }
-    const activeIdx = appState.tabs.active_index ?? 0;
-    const allTabs = Tabs.getTabs();
-    if (activeIdx < allTabs.length) {
-      switchToTab(allTabs[activeIdx].id);
-    }
-  }
 
   // Window events
   const win = getCurrentWindow();
@@ -77,16 +66,6 @@ async function init(): Promise<void> {
     await saveAllState();
   });
 
-  // Register global shortcut Ctrl+Shift+H
-  try {
-    await register('Ctrl+Shift+H', (event) => {
-      if (event.state === 'Pressed') {
-        toggleVisibility();
-      }
-    });
-  } catch (e) {
-    console.warn('Failed to register global shortcut:', e);
-  }
 
   // Bind keyboard shortcuts
   document.addEventListener('keydown', handleKeyDown);
@@ -124,6 +103,28 @@ async function init(): Promise<void> {
 
   // Chapter panel
   setupChapterPanel();
+  // Restore persisted tabs after controls are interactive.
+  if (appState?.tabs?.open_files?.length) {
+    for (const filePath of appState.tabs.open_files) {
+      await openFileInTab(filePath, false);
+    }
+    const activeIdx = appState.tabs.active_index ?? 0;
+    const allTabs = Tabs.getTabs();
+    if (activeIdx < allTabs.length) {
+      switchToTab(allTabs[activeIdx].id);
+    }
+  }
+
+  // Register global shortcut Ctrl+Shift+H after core UI bindings.
+  try {
+    await register('Ctrl+Shift+H', (event) => {
+      if (event.state === 'Pressed') {
+        toggleVisibility();
+      }
+    });
+  } catch (e) {
+    console.warn('Failed to register global shortcut:', e);
+  }
 }
 
 // ── File Operations ────────────────────────────────
